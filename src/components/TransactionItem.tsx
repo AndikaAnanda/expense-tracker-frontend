@@ -16,6 +16,7 @@ import { TableCell, TableRow } from './ui/table';
 import { useState } from 'react';
 import { Popover, PopoverContent, PopoverTrigger } from './ui/popover';
 import TransactionForm from './TransactionForm';
+import { FaTrashAlt, FaEdit } from "react-icons/fa";
 
 interface TransactionItemProps {
   transaction: Transaction;
@@ -28,7 +29,7 @@ const TransactionItem: React.FC<TransactionItemProps> = ({
   onEdit,
   onDelete,
 }) => {
-    const [isEditing, setIsEditing] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
   const handleDelete = async () => {
     try {
       await deleteTransaction(transaction.id);
@@ -43,9 +44,10 @@ const TransactionItem: React.FC<TransactionItemProps> = ({
     onEdit(updatedTransaction);
     setIsEditing(false); // tutup popover setelah update
   };
-  
+
   return (
     <TableRow>
+        
       <TableCell>{transaction.title}</TableCell>
       <TableCell>
         {transaction.type === 'expense' ? '-' : '+'}Rp.
@@ -60,30 +62,39 @@ const TransactionItem: React.FC<TransactionItemProps> = ({
           {transaction.type.charAt(0).toUpperCase() + transaction.type.slice(1)}
         </span>
       </TableCell>
-      {transaction.created_at
-        ? new Date(transaction.created_at).toLocaleDateString('en-EN', {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric',
-            hour: '2-digit',
-            minute: '2-digit',
-          })
-        : '-'}{' '}
       <TableCell>
+        {transaction.created_at
+          ? new Date(transaction.created_at).toLocaleDateString('en-EN', {
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric',
+              hour: '2-digit',
+              minute: '2-digit',
+            })
+          : '-'}{' '}
+      </TableCell>
+      <TableCell className='space-x-2 '>
         {/* Edit with popover */}
         <Popover open={isEditing} onOpenChange={setIsEditing}>
           <PopoverTrigger asChild>
-            <Button variant="outline" size="sm">Edit</Button>
+            <Button variant="outline" size="sm" className='cursor-pointer hover:bg-blue-100 text-black'>
+                <FaEdit className="mr-2" />
+              Edit
+            </Button>
           </PopoverTrigger>
           <PopoverContent className="w-80">
-            <TransactionForm transaction={transaction} onTransactionSaved={handleUpdate} />
+            <TransactionForm
+              transaction={transaction}
+              onTransactionSaved={handleUpdate}
+            />
           </PopoverContent>
         </Popover>
 
         {/* Delete with confirmation dialog */}
         <AlertDialog>
           <AlertDialogTrigger asChild>
-            <Button variant="destructive" size="sm">
+            <Button variant="destructive" size="sm" className='cursor-pointer hover:bg-red-700'>
+                <FaTrashAlt className="mr-2" />
               Delete
             </Button>
           </AlertDialogTrigger>

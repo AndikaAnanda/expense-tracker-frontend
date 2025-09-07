@@ -38,7 +38,7 @@ const TransactionForm: React.FC<TransactionFormProps> = ({ transaction, onTransa
   return (
     <form 
       onSubmit={handleSubmit}
-      className="bg-white rounded-lg shadow p-6 mb-6 max-w-md mx-auto flex flex-col gap-4"
+      className="bg-white rounded-lg shadow p-6 mb-6 w-full max-w-lg mx-auto flex flex-col gap-4"
     >
       <h2 className="text-xl font-semibold mb-2">{transaction ? 'Edit' : 'Add'} Transaction</h2>
       <div className="flex flex-col gap-1">
@@ -71,13 +71,13 @@ const TransactionForm: React.FC<TransactionFormProps> = ({ transaction, onTransa
           id="type"
           value={type}
           onChange={(e) => setType(e.target.value as 'income' | 'expense')}
-          className="border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="border rounded px-3 py-2 cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500"
         >
           <option value="expense">Expense</option>
           <option value="income">Income</option>
         </select>
       </div>
-      <Button type="submit" className="w-full mt-2">
+      <Button type="submit" className="w-full mt-2 cursor-pointer">
         {transaction ? 'Update' : 'Add'} Transaction
       </Button>
     </form>

@@ -2,6 +2,7 @@ import React from 'react';
 import type { Transaction } from '../types/transaction';
 import TransactionItem from './TransactionItem';
 import { Table, TableBody, TableHead, TableHeader, TableRow } from './ui/table';
+import DecryptedText from './DecryptedText';
 
 interface TransactionListProps {
   transactions: Transaction[];
@@ -15,16 +16,26 @@ const TransactionList: React.FC<TransactionListProps> = ({
   onDelete,
 }) => {
   return (
-    <div>
-      <h2>Transaction History</h2>
+    <div className=' p-4 rounded-lg shadow text-white bg-neutral-900'>
+      <div className='mb-4 text-lg font-bold'>
+        <DecryptedText
+          text="List of Transactions"
+          speed={100}
+          maxIterations={20}
+          characters="ABCD1234!?"
+          className="revealed"
+          parentClassName="all-letters"
+          encryptedClassName="encrypted"
+        />
+      </div>
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead>Title</TableHead>
-            <TableHead>Amount</TableHead>
-            <TableHead>Type</TableHead>
-            <TableHead>Date</TableHead>
-            <TableHead>Actions</TableHead>
+            <TableHead className='text-white'>Title</TableHead>
+            <TableHead className='text-white'>Amount</TableHead>
+            <TableHead className='text-white'>Type</TableHead>
+            <TableHead className='text-white'>Date</TableHead>
+            <TableHead className='text-white'>Actions</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
