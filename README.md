@@ -51,7 +51,7 @@ npm run dev
 
 Access the frontend at: http://localhost:5173
 
-AI Support Explanation
+## AI Support Explanation
 
 This project was developed with AI-assisted guidance to ensure clean architecture, reusable components, and efficient state management. AI support helped in:
 
@@ -64,3 +64,6 @@ Designing responsive UI with React and ShadCN components
 Debugging issues such as CORS, date formatting, and event handlers
 
 AI assistance allowed for faster prototyping and ensured the application follows best practices in modern web development.
+
+**Author**: Andika Ananda
+**License**: MIT
