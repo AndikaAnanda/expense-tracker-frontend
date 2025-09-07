@@ -13,6 +13,9 @@ import {
 } from './ui/alert-dialog';
 import { Button } from './ui/button';
 import { TableCell, TableRow } from './ui/table';
+import { useState } from 'react';
+import { Popover, PopoverContent, PopoverTrigger } from './ui/popover';
+import TransactionForm from './TransactionForm';
 
 interface TransactionItemProps {
   transaction: Transaction;
@@ -25,6 +28,7 @@ const TransactionItem: React.FC<TransactionItemProps> = ({
   onEdit,
   onDelete,
 }) => {
+    const [isEditing, setIsEditing] = useState(false);
   const handleDelete = async () => {
     try {
       await deleteTransaction(transaction.id);
@@ -34,6 +38,12 @@ const TransactionItem: React.FC<TransactionItemProps> = ({
       console.error('Failed to delete transaction:', error);
     }
   };
+
+  const handleUpdate = (updatedTransaction: Transaction) => {
+    onEdit(updatedTransaction);
+    setIsEditing(false); // tutup popover setelah update
+  };
+  
   return (
     <TableRow>
       <TableCell>{transaction.title}</TableCell>
@@ -60,14 +70,16 @@ const TransactionItem: React.FC<TransactionItemProps> = ({
           })
         : '-'}{' '}
       <TableCell>
-        <Button
-          variant="outline"
-          size="sm"
-          className="mr-2"
-          onClick={() => onEdit(transaction)}
-        >
-          Edit
-        </Button>
+        {/* Edit with popover */}
+        <Popover open={isEditing} onOpenChange={setIsEditing}>
+          <PopoverTrigger asChild>
+            <Button variant="outline" size="sm">Edit</Button>
+          </PopoverTrigger>
+          <PopoverContent className="w-80">
+            <TransactionForm transaction={transaction} onTransactionSaved={handleUpdate} />
+          </PopoverContent>
+        </Popover>
+
         {/* Delete with confirmation dialog */}
         <AlertDialog>
           <AlertDialogTrigger asChild>
@@ -88,7 +100,7 @@ const TransactionItem: React.FC<TransactionItemProps> = ({
             </AlertDialogHeader>
             <AlertDialogFooter>
               <AlertDialogCancel>Cancel</AlertDialogCancel>
-              <AlertDialogAction onClick={() => handleDelete}>
+              <AlertDialogAction onClick={handleDelete}>
                 Delete
               </AlertDialogAction>
             </AlertDialogFooter>
