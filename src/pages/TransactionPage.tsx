@@ -4,7 +4,6 @@ import TransactionList from '../components/TransactionList';
 import { getTransactions } from '../services/transactionService';
 import type { Transaction } from '../types/transaction';
 import TrueFocus from '@/components/TrueFocusText';
-import Prism from '@/components/PrismBackground';
 import LiquidEther from '@/components/LiquidEtherBackground';
 
 const TransactionsPage: React.FC = () => {
